@@ -16,6 +16,9 @@
             ns.app.enableStats();
         }
 
+        // ユーザデータの生成(@q グローバルなんだが良いのか？)
+        ns.userdata = tm.util.DataManager.get("userData");
+
         // シーンの切り替え
         ns.app.replaceScene(ns.TitleScene());
 
