@@ -12,6 +12,10 @@
 		"player": {
 			"image": "player",
 			"rect": [64, 64, ns.SCREEN_WIDTH/2, 600]
+		},
+		"outyaku": {
+			"image": "outyaku",
+			"rect": [40, 40]
 		}
 	};
 
@@ -87,7 +91,7 @@
             this.addChild(this.enemy_group);
             this.enemy_group.update = function (app) {
             	if (app.frame % 30 === 0) {
-            		var enemy = ns.Enemy(enemyImage);
+            		var enemy = ns.Enemy(IMAGES["outyaku"].rect[0], IMAGES["outyaku"].rect[1], IMAGES["outyaku"].image);
             		enemy.position.set(Math.rand(40, app.height-40), -20);
 
             		// enemy_groupにenemyを追加
@@ -123,6 +127,7 @@
             	bullet.position.set(this.player.x, this.player.y - 20);
             	this.bullet_group.addChild(bullet);
             }
+            // ショット間隔の計算
             --this.wait_time_bullet;
 
             // ヒット判定

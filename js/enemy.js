@@ -3,17 +3,11 @@
  */
 (function(ns) {
 
-    // 画像リスト
-	var IMAGES = {
-
-	};
-
     ns.Enemy = tm.createClass({
-    	superClass: tm.app.Shape,
+    	superClass: tm.app.Sprite,
 
-        init : function(img) {
-            this.superInit(40, 40);
-            this.canvas = img;
+        init : function(width, height, img) {
+            this.superInit(width, height, img);
         },
 
         update : function() {
