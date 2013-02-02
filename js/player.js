@@ -3,19 +3,11 @@
  */
 (function(ns) {
 
-    // 画像リスト
-	var IMAGES = {
-
-	};
-
     ns.Player = tm.createClass({
+    	superClass: tm.app.Sprite,
 
-    	// 仮
-    	superClass: tm.app.Shape,
-
-        init : function(img) {
-            this.superInit(40, 40);
-            this.canvas = img;
+        init : function(width, height, img) {
+            this.superInit(width, height, img);
             this.speed = 0;
             this.velocity = tm.geom.Vector2(0, 0);
 

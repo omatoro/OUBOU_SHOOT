@@ -5,21 +5,15 @@
 
     // 画像リスト
 	var IMAGES = {
-
+		"bullet": {
+			"image": "bullet",
+			"rect": [3, 30]
+		},
+		"player": {
+			"image": "player",
+			"rect": [64, 64, ns.SCREEN_WIDTH/2, 600]
+		}
 	};
-
-	// 自機のイメージデータ
-	var playerImage = (function () {
-		var c = tm.graphics.Canvas();
-		c.width = c.height = 40;
-		c.setTransformCenter();
-		c.setLineStyle(2, "round", "round");
-		c.setColorStyle("white", "rgba(200, 200, 200, 0.9)");
-		c.fillPolygon(0, 0, 20, 3, 270);
-		c.strokePolygon(0, 0, 20, 3, 270);
-
-		return c;
-	})();
 
 	// 敵のイメージデータ
 	var enemyImage = (function() {
@@ -30,16 +24,6 @@
 		c.setColorStyle("while", "rgb(255, 50, 50)");
 		c.fillStar(0, 0, 20, 16, 0.6);
 		c.strokeStar(0, 0, 20, 16, 0.6);
-		return c;
-	})();
-
-	// 弾のイメージデータ
-	var bulletImage = (function() {
-		var c = tm.graphics.Canvas();
-		c.width = c.height = 10;
-		c.setTransformCenter();
-		c.setColorStyle("while", "white");
-		c.fillCircle(0, 0, 5);
 		return c;
 	})();
 
@@ -57,7 +41,22 @@
 				fontSize: 64,
 				align: "center"
 			}]
-		}
+		},
+//		IMAGE: {
+//			children: [{
+//				type: "Sprite",
+//				name: "player",
+//				scaleX: 1.0,
+//				scaleY: 1.0,
+//				image: IMAGES["bullet"].image,
+//				width: IMAGES["bullet"].rect[2],
+//				height: IMAGES["bullet"].rect[3],
+//				position: {
+//					x: IMAGES["bullet"].rect[0],
+//					y: IMAGES["bullet"].rect[1]
+//				}
+//			}]
+//		}
 	};
 
 
@@ -78,8 +77,8 @@
             this.score_label.text = "score : " + ns.userdata.score;
 
             // 自機
-            this.player = ns.Player(playerImage);
-            this.player.position.set(ns.app.width/2, 600);
+            this.player = ns.Player(IMAGES["player"].rect[0], IMAGES["player"].rect[1], IMAGES["player"].image);
+            this.player.position.set(IMAGES["player"].rect[2], IMAGES["player"].rect[3]);
             this.addChild(this.player);
 
             // 敵グループ
@@ -120,7 +119,7 @@
             if ((ns.app.keyboard.getKeyDown("Z") ||  ns.app.pointing.getPointing() == true)
             &&  this.wait_time_bullet < 0) {
             	this.wait_time_bullet = 10;
-            	var bullet = ns.Bullet(bulletImage);
+        		var bullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
             	bullet.position.set(this.player.x, this.player.y - 20);
             	this.bullet_group.addChild(bullet);
             }
