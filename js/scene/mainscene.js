@@ -5,10 +5,6 @@
 
     // 画像リスト
 	var IMAGES = {
-		"bullet": {
-			"image": "bullet",
-			"rect": [3, 30]
-		},
 		"player": {
 			"image": "player",
 			"rect": [64, 64, ns.SCREEN_WIDTH/2, 600]
@@ -81,7 +77,7 @@
             this.score_label.text = "score : " + ns.userdata.score;
 
             // 自機
-            this.player = ns.Player(IMAGES["player"].rect[0], IMAGES["player"].rect[1], IMAGES["player"].image);
+            this.player = ns.Player(IMAGES["player"].rect[0], IMAGES["player"].rect[1], IMAGES["player"].image, this);
             this.player.position.set(IMAGES["player"].rect[2], IMAGES["player"].rect[3]);
             this.addChild(this.player);
 
@@ -99,14 +95,6 @@
             	}
             };
 
-            // 弾の発射間隔
-            this.wait_time_bullet = 0;
-
-            // 弾グループ
-            this.bullet_group = null;
-            this.bullet_group = tm.app.CanvasElement();
-            this.addChild(this.bullet_group);
-
             // BGM
             this.bgm = tm.sound.SoundManager.get("bgm");
             this.bgm.loop = true;
@@ -119,17 +107,6 @@
                 //ns.app.replaceScene(ns.EndScene());
             }
 
-            // ショット
-            if ((ns.app.keyboard.getKeyDown("Z") ||  ns.app.pointing.getPointing() == true)
-            &&  this.wait_time_bullet < 0) {
-            	this.wait_time_bullet = 10;
-        		var bullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
-            	bullet.position.set(this.player.x, this.player.y - 20);
-            	this.bullet_group.addChild(bullet);
-            }
-            // ショット間隔の計算
-            --this.wait_time_bullet;
-
             // ヒット判定
             for (var i = 0; i < this.enemy_group.children.length; ++i) {
             	// 自機&敵
@@ -140,8 +117,8 @@
             	}
 
             	// 敵&弾
-            	for (var j = 0; j < this.bullet_group.children.length; ++j) {
-            		var bullet = this.bullet_group.children[j];
+            	for (var j = 0; j < this.player.bullet_group.children.length; ++j) {
+            		var bullet = this.player.bullet_group.children[j];
             		if (enemy.isHitElement(bullet) === true) {
             			console.log("bullet hit");
             			enemy.remove();
