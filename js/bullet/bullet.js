@@ -11,7 +11,7 @@
         },
 
         update : function() {
-            this.y -= 16;
+            this.y -= 32;
 
             // 画面外に出たら自分自身を削除
             if (this.y <= -this.height) {

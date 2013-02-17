@@ -29,6 +29,9 @@
             // 弾の発射間隔
             this.waitTimeBullet = 0;
 
+            // トリプルショットの発射間隔
+            this.threeWayBulletTimer = ns.Timing(5);
+
             // 弾グループ
             this.bullet_group = null;
             this.bullet_group = tm.app.CanvasElement();
@@ -57,13 +60,33 @@
             this.speed *= 0.7;
 
             // ショット
-            if ((ns.app.keyboard.getKeyDown("Z") ||  ns.app.pointing.getPointing())
+            if ((ns.app.keyboard.getKeyDown("Z") || ns.app.pointing.getPointing())
             &&  this.waitTimeBullet < 0) {
             	this.waitTimeBullet = 10;
         		var bullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
             	bullet.position.set(this.x, this.y - 20);
             	this.bullet_group.addChild(bullet);
             }
+
+            // トリプルショット
+            if (this.threeWayBulletTimer.update()
+            && (ns.app.keyboard.getKeyDown("X"))) {
+            	// タイマーのリセット
+            	this.threeWayBulletTimer.reset();
+
+				var leftBullet   = ns.LeftBullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
+				var centerBullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
+				var rightBullet  = ns.RightBullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
+
+				leftBullet.position.set(this.x, this.y - 20);
+				centerBullet.position.set(this.x, this.y - 20);
+				rightBullet.position.set(this.x, this.y - 20);
+
+            	this.bullet_group.addChild(leftBullet);
+            	this.bullet_group.addChild(centerBullet);
+            	this.bullet_group.addChild(rightBullet);
+            }
+
             // ショット間隔の計算
             --this.waitTimeBullet;
         }
