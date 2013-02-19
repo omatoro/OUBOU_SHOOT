@@ -99,6 +99,35 @@
             this.bgm = tm.sound.SoundManager.get("bgm");
             this.bgm.loop = true;
             this.bgm.play();
+
+            // パーティクル
+            this.particle = tm.app.SpriteSheet({
+            	image: "particle",
+            	frame: {
+            		width: 160,
+            		height: 160,
+            		count: 10
+            	},
+            	animations: {
+            		"crash": [0, 9]
+            	}
+            });
+
+            this.createCrashSprite = function (x, y) {
+            	var crash = tm.app.AnimationSprite(160, 160, this.particle);
+            	crash.position.set(x, y);
+            	crash.gotoAndPlay("crash");
+            	crash.blendMode = "lighter";
+
+            	// アニメーションが終了したら破棄する
+            	crash.update = function () {
+            		if (crash.paused) {
+            			this.remove();
+            		}
+            	};
+
+            	return crash;
+            };
         },
 
         update : function() {
@@ -123,6 +152,14 @@
             			console.log("bullet hit");
             			enemy.remove();
             			bullet.remove();
+
+            			// パーティクル作成
+            			var test = Math.rand(0, 2);
+            			if (test === 0) { var crash = ns.ExploadRed(bullet.x, bullet.y); }
+            			if (test === 1) { var crash = ns.ExploadBrue(bullet.x, bullet.y); }
+            			if (test === 2) { var crash = ns.ExploadGreen(bullet.x, bullet.y); }
+
+            			this.addChild(crash);
 
             			// スコア更新
             			++ns.userdata.score;

@@ -1,5 +1,14 @@
 /**
  * カウント用(指定したタイミングでtrueが来る)
+ *
+ * ■使い方
+ * - 初期化時
+ *  this.timer = ns.Timing(limit_frame);
+ *
+ * - ゲームループ内
+ *  if (!this.timer.update()) {
+ *      // limitのフレームに達する間は実行する
+ *  }
  */
 (function(ns) {
 

@@ -27,7 +27,7 @@
             this.pad = pad;
 
             // 弾の発射間隔
-            this.waitTimeBullet = 0;
+            this.bulletTimer = ns.Timing(5);
 
             // トリプルショットの発射間隔
             this.threeWayBulletTimer = ns.Timing(5);
@@ -60,9 +60,11 @@
             this.speed *= 0.7;
 
             // ショット
-            if ((ns.app.keyboard.getKeyDown("Z") || ns.app.pointing.getPointing())
-            &&  this.waitTimeBullet < 0) {
-            	this.waitTimeBullet = 10;
+            if (this.bulletTimer.update()
+        	&& (ns.app.keyboard.getKeyDown("Z") || ns.app.pointing.getPointing())) {
+            	// タイマーのリセット
+            	this.bulletTimer.reset();
+
         		var bullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
             	bullet.position.set(this.x, this.y - 20);
             	this.bullet_group.addChild(bullet);
@@ -86,9 +88,6 @@
             	this.bullet_group.addChild(centerBullet);
             	this.bullet_group.addChild(rightBullet);
             }
-
-            // ショット間隔の計算
-            --this.waitTimeBullet;
         }
     });
 
