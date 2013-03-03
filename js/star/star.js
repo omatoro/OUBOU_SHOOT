@@ -1,21 +1,24 @@
 /**
- * 弾
+ * 星(取得するとポイント)
  */
 (function(ns) {
 
-    ns.Bullet = tm.createClass({
-    	superClass: tm.app.Sprite,
+	var SPEED = 1;
 
-        init : function(width, height, img, direct) {
-            this.superInit(width, height, img);
-            var angle = direct || -90
+    ns.Star = tm.createClass({
+    	superClass: tm.app.AnimationSprite,
+
+        init : function(angle, x, y, img) {
+            this.superInit(60, 60, img);
+            this.position.set(x, y);
+        	this.gotoAndPlay("flash");
+        	//this.blendMode = "lighter";
+
             this.velocity = tm.geom.Vector2(0, 0);
-            this.velocity.setDegree(angle, 15);
-            this.rotation = angle+90;
+            this.velocity.setRadian(angle, SPEED);
         },
 
         update : function() {
-
             this.x += this.velocity.x;
             this.y += this.velocity.y;
 
@@ -28,5 +31,7 @@
             }
         }
     });
+
+
 
 })(game);

@@ -3,14 +3,14 @@
  */
 (function(ns) {
 
-    ns.PauseScene = tm.createClass({
+    ns.ContinueScene = tm.createClass({
 
         superClass : tm.app.Scene,
 
         // タイトル移動へのボタン
         title_button : {},
 
-        init : function (score) {
+        init : function () {
         	this.superInit();
         	this.interaction;
 

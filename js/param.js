@@ -9,8 +9,8 @@ var game = game || {};
     ns.DEBUG = true;
 
     // スクリーンサイズ
-    ns.SCREEN_WIDTH  = 640;
-    ns.SCREEN_HEIGHT = 960;
+    ns.SCREEN_WIDTH  = 960;
+    ns.SCREEN_HEIGHT = 640;
 
     // スコアデータなどのユーザデータの中身を作成
     tm.util.DataManager.set("userData", {

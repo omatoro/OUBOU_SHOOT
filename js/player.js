@@ -36,6 +36,7 @@
             this.bullet_group = null;
             this.bullet_group = tm.app.CanvasElement();
             scene.addChild(this.bullet_group);
+
         },
 
         update : function() {
@@ -44,13 +45,13 @@
             if (angle != null) {
             	this.velocity.setDegree(angle, 1);
             	this.velocity.y *= -1;
-            	this.speed = 8;
+            	this.speed = 4;
             }
 
             // タッチパネルによる速度設定
             if (this.pad.isTouching) {
             	this.velocity.setDegree(this.pad.angle, 1);
-            	this.speed = 8;
+            	this.speed = 4;
             }
 
             // 押した方向と速度で移動
@@ -65,8 +66,8 @@
             	// タイマーのリセット
             	this.bulletTimer.reset();
 
-        		var bullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image);
-            	bullet.position.set(this.x, this.y - 20);
+        		var bullet = ns.Bullet(IMAGES["bullet"].rect[0], IMAGES["bullet"].rect[1], IMAGES["bullet"].image, this.pad.angle);
+            	bullet.position.set(this.x, this.y);
             	this.bullet_group.addChild(bullet);
             }
 

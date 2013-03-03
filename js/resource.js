@@ -15,7 +15,7 @@ tm.preload(function() {
 	tm.graphics.TextureManager.add("crash_green", "rsc/crash_green.png");
 
 	// animation
-	tm.graphics.TextureManager.add("particle", "rsc/hit_particle.png");
+	tm.graphics.TextureManager.add("star", "rsc/point.png");
 
 //    tm.graphics.TextureManager.add("num1", "img/1.png");
 });

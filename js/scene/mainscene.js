@@ -100,34 +100,22 @@
             this.bgm.loop = true;
             this.bgm.play();
 
-            // パーティクル
-            this.particle = tm.app.SpriteSheet({
-            	image: "particle",
-            	frame: {
-            		width: 160,
-            		height: 160,
-            		count: 10
-            	},
-            	animations: {
-            		"crash": [0, 9]
-            	}
-            });
+            // ■■スプライトパーティクル■■ 外部変数としてスプライトを生成できるようになったらstar.jsに移植する
+            this.starImage = tm.app.SpriteSheet({
+        		image: "star",
+        		frame: {
+        			width:  40,
+        			height: 40,
+        			count:  9
+        		},
+        		animations: {
+        			"flash": [0, 9, "flash", 2]
+        		}
+        	});
 
-            this.createCrashSprite = function (x, y) {
-            	var crash = tm.app.AnimationSprite(160, 160, this.particle);
-            	crash.position.set(x, y);
-            	crash.gotoAndPlay("crash");
-            	crash.blendMode = "lighter";
-
-            	// アニメーションが終了したら破棄する
-            	crash.update = function () {
-            		if (crash.paused) {
-            			this.remove();
-            		}
-            	};
-
-            	return crash;
-            };
+            // スターツグループ
+            this.star_group = tm.app.CanvasElement();
+            this.addChild(this.star_group);
         },
 
         update : function() {
@@ -161,12 +149,32 @@
 
             			this.addChild(crash);
 
+            			// スター(取得するとポイント)を生成
+            			var angleToPlayer = this.player.position.clone().sub(bullet.position).toAngle();
+            			console.dir(angleToPlayer);
+            			var star = ns.Star(angleToPlayer, bullet.x, bullet.y, this.starImage);
+            			this.star_group.addChild(star);
+
+
             			// スコア更新
             			++ns.userdata.score;
             			this.score_label.text = "score : " + ns.userdata.score;
             		}
             	}
             }
+
+            // ヒット判定 自機&スター
+            for (var i = 0; i < this.star_group.children.length; ++i) {
+            	var star = this.star_group.children[i];
+            	if (this.player.isHitElement(star) === true) {
+            		// スコア更新
+        		ns.userdata.score += 1000;
+        			this.score_label.text = "score : " + ns.userdata.score;
+
+            		star.remove();
+            	}
+            }
+
         },
 
         // ポーズ画面への遷移
