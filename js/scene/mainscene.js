@@ -7,7 +7,7 @@
 	var IMAGES = {
 		"player": {
 			"image": "player",
-			"rect": [64, 64, ns.SCREEN_WIDTH/2, 600]
+			"rect": [64, 64, ns.SCREEN_WIDTH, 1000]
 		},
 		"outyaku": {
 			"image": "outyaku",
@@ -76,24 +76,39 @@
             this.fromJSON(UI_DATA.LABELS);
             this.score_label.text = "score : " + ns.userdata.score;
 
+            // 敵グループ
+            this.enemy_group = null;
+            this.enemy_group = tm.app.CanvasElement();// マップ
+            this.addChild(this.enemy_group);
+            this.enemy_group.update = function (app) {
+                if (app.frame % 30 === 0) {
+                    var enemy = ns.Enemy(IMAGES["outyaku"].rect[0], IMAGES["outyaku"].rect[1], IMAGES["outyaku"].image);
+                    enemy.position.set(Math.rand(-ns.MAP_WIDTH/2 + 40, ns.MAP_WIDTH/2 - 40), -ns.MAP_HEIGHT/2);
+
+                    // enemy_groupにenemyを追加
+                    this.addChild(enemy);
+                }
+            };
+
+            // マップ
+            this.map = ns.Map();
+            this.map.position.set();
+
             // 自機
             this.player = ns.Player(IMAGES["player"].rect[0], IMAGES["player"].rect[1], IMAGES["player"].image, this);
             this.player.position.set(IMAGES["player"].rect[2], IMAGES["player"].rect[3]);
-            this.addChild(this.player);
+            // this.player.name = "player";
 
-            // 敵グループ
-            this.enemy_group = null;
-            this.enemy_group = tm.app.CanvasElement();
-            this.addChild(this.enemy_group);
-            this.enemy_group.update = function (app) {
-            	if (app.frame % 30 === 0) {
-            		var enemy = ns.Enemy(IMAGES["outyaku"].rect[0], IMAGES["outyaku"].rect[1], IMAGES["outyaku"].image);
-            		enemy.position.set(Math.rand(40, app.height-40), -20);
+            // マップのセット
+            this.map.setPlayer(this.player);
+            this.map.addChild(this.enemy_group);
+            this.addChild(this.map);
 
-            		// enemy_groupにenemyを追加
-            		this.addChild(enemy);
-            	}
-            };
+            // パッド
+            var pad = tm.controller.Pad();
+            pad.position.set(80, ns.SCREEN_HEIGHT - 80);
+            this.addChild(pad);
+            this.player.setPad(pad);
 
             // BGM
             this.bgm = tm.sound.SoundManager.get("bgm");
@@ -113,9 +128,9 @@
         		}
         	});
 
-            // スターツグループ
+            // スターグループ
             this.star_group = tm.app.CanvasElement();
-            this.addChild(this.star_group);
+            this.map.addChild(this.star_group);
         },
 
         update : function() {
@@ -136,7 +151,7 @@
             	// 敵&弾
             	for (var j = 0; j < this.player.bullet_group.children.length; ++j) {
             		var bullet = this.player.bullet_group.children[j];
-            		if (enemy.isHitElement(bullet) === true) {
+            		if (bullet.isHitElement(enemy) === true) {
             			console.log("bullet hit");
             			enemy.remove();
             			bullet.remove();
@@ -147,14 +162,12 @@
             			if (test === 1) { var crash = ns.ExploadBrue(bullet.x, bullet.y); }
             			if (test === 2) { var crash = ns.ExploadGreen(bullet.x, bullet.y); }
 
-            			this.addChild(crash);
+            			this.map.addChild(crash);
 
             			// スター(取得するとポイント)を生成
-            			var angleToPlayer = this.player.position.clone().sub(bullet.position).toAngle();
-            			console.dir(angleToPlayer);
+            			var angleToPlayer = this.player.getParentPosition().clone().sub(bullet.position.clone()).toAngle();
             			var star = ns.Star(angleToPlayer, bullet.x, bullet.y, this.starImage);
             			this.star_group.addChild(star);
-
 
             			// スコア更新
             			++ns.userdata.score;
@@ -167,14 +180,13 @@
             for (var i = 0; i < this.star_group.children.length; ++i) {
             	var star = this.star_group.children[i];
             	if (this.player.isHitElement(star) === true) {
-            		// スコア更新
+        		// スコア更新
         		ns.userdata.score += 1000;
         			this.score_label.text = "score : " + ns.userdata.score;
 
             		star.remove();
             	}
             }
-
         },
 
         // ポーズ画面への遷移

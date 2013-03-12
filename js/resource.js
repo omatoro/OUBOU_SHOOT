@@ -9,6 +9,7 @@ tm.preload(function() {
 	tm.graphics.TextureManager.add("bullet", "rsc/bullet.png");
 	tm.graphics.TextureManager.add("player", "rsc/player.png");
 	tm.graphics.TextureManager.add("outyaku", "rsc/outyaku.png");
+	tm.graphics.TextureManager.add("map", "rsc/background.png");
 
 	tm.graphics.TextureManager.add("crash_brue", "rsc/crash_brue.png");
 	tm.graphics.TextureManager.add("crash_red", "rsc/crash_red.png");

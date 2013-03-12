@@ -12,7 +12,7 @@
             this.superInit(60, 60, img);
             this.position.set(x, y);
         	this.gotoAndPlay("flash");
-        	//this.blendMode = "lighter";
+        	this.blendMode = "lighter";
 
             this.velocity = tm.geom.Vector2(0, 0);
             this.velocity.setRadian(angle, SPEED);
@@ -23,11 +23,11 @@
             this.y += this.velocity.y;
 
             // 画面外に出たら自分自身を削除
-            if (this.y <= 0 - this.height
-            ||  this.y >= ns.SCREEN_HEIGHT + this.height
-            ||  this.x <= 0 - this.width
-            ||  this.x >= ns.SCREEN_WIDTH + this.width) {
-            	this.remove();
+            if (this.y <= - ns.MAP_HEIGHT/2 - this.height
+            ||  this.y >=   ns.MAP_HEIGHT/2 + this.height
+            ||  this.x <= - ns.MAP_WIDTH/2 - this.width
+            ||  this.x >=   ns.MAP_WIDTH/2 + this.width) {
+                this.remove();
             }
         }
     });
