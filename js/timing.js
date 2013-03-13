@@ -17,15 +17,28 @@
         init : function(limitFrame) {
             this.limit = limitFrame || 0;
             this.count = 0;
+            this.toggleFlag = false;
         },
 
         update : function () {
-        	if (this.count > this.limit) {
+        	if (this.limit < this.count) {
         		return true;
         	}
         	++this.count;
 
         	return false;
+        },
+
+        toggle : function () {
+            if (this.update()) {
+                // タイミングがきたら返す値を逆転する
+                this.reset();
+                this.toggleFlag = !this.toggleFlag;
+                return this.toggleFlag;
+            }
+            else {
+                return this.toggleFlag;
+            }
         },
 
         reset : function () {
