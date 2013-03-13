@@ -15,7 +15,7 @@
             this.rotation -= 4;
 
             // 画面外に出たら自分自身を削除
-            if (this.y > ns.MAP_HEIGHT + 40) {
+            if (this.y > ns.MAP_HEIGHT/2 + this.height) {
             	this.remove();
             }
         }
