@@ -5,12 +5,15 @@
 
     var SPEED = 2;
     var REMOVE_POSITION_LINE = 50;
+    var HITPOINT = 1;
 
     ns.Stage01Enemy = tm.createClass({
     	superClass: ns.Enemy,
 
         init : function(width, height, img) {
             this.superInit(width, height, img);
+            // HP
+            this.hitpoint = HITPOINT;
 
             // 進む方向をランダムにする
             var angle = Math.rand(0, 359);
@@ -29,6 +32,12 @@
             if (135 < angle && angle <= 225) { this.position.set(　ns.MAP_WIDTH/2 + this.width, generatePositionY); 　　} // 右側から出現
             if (225 < angle && angle <= 315) { this.position.set(generatePositionX, -ns.MAP_HEIGHT/2 - this.height); } // 上側から出現
             if (315 < angle && angle <= 360) { this.position.set(-ns.MAP_WIDTH/2 - this.width, generatePositionY); 　　} // 左側から出現
+        },
+
+        damaged : function (attackpoint) {
+            var proto = Object.getPrototypeOf(this);
+            var proto_proto = Object.getPrototypeOf(proto);
+            proto_proto.damaged.call(this, attackpoint); // 継承元クラスのdamagedを実行
         },
 
         update : function() {

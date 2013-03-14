@@ -12,6 +12,7 @@
             this.velocity = tm.geom.Vector2(0, 0);
             this.velocity.setDegree(angle, 15);
             this.rotation = angle+90;
+            this.attackpoint = 1;
         },
 
         update : function() {

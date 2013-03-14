@@ -6,7 +6,7 @@
     var SPEED = 2;
     var REMOVE_POSITION_LINE = 50;
     var TIMING = 60;//ns.app.fps;
-    var HITPOINT = 5;
+    var HITPOINT = 3;
 
     ns.Stage02Enemy = tm.createClass({
     	superClass: ns.Enemy,
@@ -48,14 +48,6 @@
             var proto = Object.getPrototypeOf(this);
             var proto_proto = Object.getPrototypeOf(proto);
             proto_proto.update.call(this); // 継承元クラスのupdateを実行
-
-            // ジグザグに移動するよう進む方向を変更する
-            if (this.timing.toggle()) {
-                this.velocity.setDegree(this.angle + 20, SPEED);
-            }
-            else {
-                this.velocity.setDegree(this.angle - 20, SPEED);
-            }
 
             this.y += this.velocity.x;
             this.x += this.velocity.y;

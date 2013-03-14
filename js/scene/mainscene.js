@@ -155,7 +155,7 @@
             		var bullet = this.player.bullet_group.children[j];
             		if (bullet.isHitElement(enemy) === true) {
             			console.log("bullet hit");
-            			enemy.remove();
+            			enemy.damaged(bullet.attackpoint);
             			bullet.remove();
 
             			// パーティクル作成

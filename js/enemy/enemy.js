@@ -5,12 +5,22 @@
 
     // マップの橋＋敵画像幅＋以下変数より外側に出たら削除する
     var REMOVE_POSITION_LINE = 50;
+    var HITPOINT = 1;
 
     ns.Enemy = tm.createClass({
     	superClass: tm.app.Sprite,
 
         init : function(width, height, img) {
             this.superInit(width, height, img);
+            // HP
+            this.hitpoint = HITPOINT;
+        },
+
+        damaged : function (attackpoint) {
+            this.hitpoint -= attackpoint;
+            if (this.hitpoint <= 0) {
+                this.remove();
+            }
         },
 
         update : function() {
