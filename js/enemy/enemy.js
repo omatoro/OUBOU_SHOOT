@@ -10,10 +10,23 @@
     ns.Enemy = tm.createClass({
     	superClass: tm.app.Sprite,
 
-        init : function(width, height, img) {
+        init : function(width, height, img, angle) {
             this.superInit(width, height, img);
             // HP
             this.hitpoint = HITPOINT;
+
+            // 生成位置を決める
+            var generatePositionY = Math.rand(
+                -ns.MAP_HEIGHT/2 - this.height,
+                 ns.MAP_HEIGHT/2 + this.height);
+            var generatePositionX = Math.rand(
+                -ns.MAP_WIDTH/2 - this.width,
+                 ns.MAP_WIDTH/2 + this.width);
+            if (0   < angle && angle <= 45)  { this.position.set(-ns.MAP_WIDTH/2 - this.width, generatePositionY);　　　} // 左側から出現
+            if (45  < angle && angle <= 135) { this.position.set(generatePositionX, 　ns.MAP_HEIGHT/2 + this.height); } // 下側から出現
+            if (135 < angle && angle <= 225) { this.position.set(　ns.MAP_WIDTH/2 + this.width, generatePositionY); 　　} // 右側から出現
+            if (225 < angle && angle <= 315) { this.position.set(generatePositionX, -ns.MAP_HEIGHT/2 - this.height); } // 上側から出現
+            if (315 < angle && angle <= 360) { this.position.set(-ns.MAP_WIDTH/2 - this.width, generatePositionY); 　　} // 左側から出現
         },
 
         damaged : function (attackpoint) {
