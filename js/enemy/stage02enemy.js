@@ -3,6 +3,14 @@
  */
 (function(ns) {
 
+    // 画像リスト
+    var IMAGES = {
+        "outyaku": {
+            "image": "outyaku",
+            "rect": [40, 40]
+        }
+    };
+
     var SPEED = 2;
     var REMOVE_POSITION_LINE = 50;
     var TIMING = 60;//ns.app.fps;
@@ -18,7 +26,11 @@
             this.velocity.setDegree(this.angle, SPEED);
 
             // 基底クラスの初期化処理を実行
-            this.superInit(width, height, img, this.angle);
+            this.superInit(
+                IMAGES["outyaku"].rect[0],
+                IMAGES["outyaku"].rect[1],
+                IMAGES["outyaku"].image,
+                this.angle);
 
             // HP
             this.hitpoint = HITPOINT;

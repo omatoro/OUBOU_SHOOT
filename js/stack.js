@@ -3,11 +3,12 @@
  */
 (function(ns) {
 
-    ns.stack = tm.createClass({
-        data : [],
-
-        init : function (data) {
-            this.data = data || this.data;
+    ns.Stack = tm.createClass({
+        init : function (limit, over, data) {
+            var tempdata = [];
+            this.data  = data  || tempdata;
+            this.limit = limit || 1000;
+            this.over  = over  || 500;
         },
 
         pop : function () {
@@ -16,8 +17,16 @@
             return result;
         },
 
+        random : function (num) {
+            return data[num];
+        },
+
         push : function (data) {
             data[data.length] = data || this.data;
+
+            if (this.limit + this.limitOver <= data.length) {
+                data.splice(this.limit, this.limitOver);
+            }
         }
 
     });

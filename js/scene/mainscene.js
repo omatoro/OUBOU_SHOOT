@@ -84,7 +84,7 @@
             // 敵の出現方法はステージごとに変更する
             this.enemy_group.update = function (app) {
                 if (app.frame % 120 === 0) {
-                    var enemy = ns.Stage05Enemy(IMAGES["outyaku"].rect[0], IMAGES["outyaku"].rect[1], IMAGES["outyaku"].image);
+                    var enemy = ns.Stage05Enemy();
                     // enemy.position.set(Math.rand(-ns.MAP_WIDTH/2 + 40, ns.MAP_WIDTH/2 - 40), -ns.MAP_HEIGHT/2 - 40);
 
                     // enemy_groupにenemyを追加

@@ -3,6 +3,14 @@
  */
 (function(ns) {
 
+    // 画像リスト
+    var IMAGES = {
+        "ikari": {
+            "image": "ikari",
+            "rect": [25, 25]
+        }
+    };
+
     var SPEED = 3;
     var REMOVE_POSITION_LINE = 50;
     var TIMING = 20;//ns.app.fps;
@@ -11,14 +19,18 @@
     ns.Stage05Enemy = tm.createClass({
     	superClass: ns.Enemy,
 
-        init : function(width, height, img) {
+        init : function() {
             // 進む方向をランダムにする
             this.angle = Math.rand(0, 359);
             this.velocity = tm.geom.Vector2(0, 0);
             this.velocity.setDegree(this.angle, SPEED);
 
             // 基底クラスの初期化処理を実行
-            this.superInit(width, height, img, this.angle);
+            this.superInit(
+                IMAGES["ikari"].rect[0],
+                IMAGES["ikari"].rect[1],
+                IMAGES["ikari"].image,
+                this.angle);
 
             // HP
             this.hitpoint = HITPOINT;
