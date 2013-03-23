@@ -16,8 +16,7 @@
     ns.Stage06EnemyChild = tm.createClass({
         superClass: tm.app.Sprite,
 
-        init : function(childNumber) {
-
+        init : function() {
             // 基底クラスの初期化処理を実行
             this.superInit(
                 IMAGES["ikari"].rect[0],
@@ -25,6 +24,8 @@
                 IMAGES["ikari"].image);
             // HP
             this.hitpoint = HITPOINT;
+            // 追尾先のオブジェクト
+            this.target = null;
         },
 
         damaged : function (attackpoint) {
