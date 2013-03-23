@@ -78,17 +78,21 @@
 
             // 敵グループ
             this.enemy_group = null;
-            this.enemy_group = tm.app.CanvasElement();// マップ
+            this.enemy_group = tm.app.CanvasElement();
             this.addChild(this.enemy_group);
 
             // 敵の出現方法はステージごとに変更する
             this.enemy_group.update = function (app) {
                 if (app.frame % 120 === 0) {
-                    var enemy = ns.Stage05Enemy();
+                    // var enemy = ns.Stage05Enemy();
                     // enemy.position.set(Math.rand(-ns.MAP_WIDTH/2 + 40, ns.MAP_WIDTH/2 - 40), -ns.MAP_HEIGHT/2 - 40);
 
+                    var enemy = ns.Stage06Enemy();
+                    
+                    // this.addChild(enemy.getEnemyList()); // リストを管理している敵はリストを取得して追加
+
                     // enemy_groupにenemyを追加
-                    this.addChild(enemy);
+                    // this.addChild(enemy);
                 }
             };
 

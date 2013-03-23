@@ -3,7 +3,7 @@
  */
 tm.preload(function() {
 	// sound
-	tm.sound.SoundManager.add("bgm", "rsc/bgm.wav", 1);
+	tm.sound.SoundManager.add("bgm", "rsc/bgm.mp3", 1);
 
 	// img
 	tm.graphics.TextureManager.add("bullet", "rsc/bullet.png");
